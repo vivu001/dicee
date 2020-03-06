@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -6,10 +7,10 @@ void main() {
   return runApp(
     MaterialApp(
       home: Scaffold(
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.amber,
         appBar: AppBar(
-          title: Text('Dicee'),
-          backgroundColor: Colors.red,
+          title: Text('Dicee', style: TextStyle(color: Colors.redAccent)),
+          backgroundColor: Colors.indigo,
           centerTitle: true,
         ),
         body: MyDicePage(),
@@ -27,32 +28,30 @@ class _MyDicePageState extends State<MyDicePage> {
   var _diceLeftNr = 1;
   var _diceRightNr = 2;
 
-  int _createRandom() {
-    int _d;
+  void _createRandom() {
     setState(() {
-      _d = new Random().nextInt(6) + 1; // generate a random number within range [1-6]
+      _diceLeftNr = new Random().nextInt(6) + 1;
+      _diceRightNr = new Random().nextInt(6) + 1;
+      print('Left: $_diceLeftNr');
+      print('Right: $_diceRightNr');
     });
-    return _d;
-  }
+  } // generate a random number within range [1-6]
 
   @override
   Widget build(BuildContext context) {
-
     return Center(
       child: Row(
         children: <Widget>[
           Expanded(
               child: FlatButton(
                   onPressed: () {
-                    _diceLeftNr = _createRandom();
-                    print('Left: $_diceLeftNr');
+                    _createRandom();
                   },
                   child: Image.asset('images/dice$_diceLeftNr.png'))),
           Expanded(
               child: FlatButton(
                   onPressed: () {
-                    _diceRightNr = _createRandom();
-                    print('Right: $_diceRightNr');
+                    _createRandom();
                   },
                   child: Image.asset('images/dice$_diceRightNr.png')))
         ],
